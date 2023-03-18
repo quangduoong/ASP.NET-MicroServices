@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: command-depl
+  labels: 
+    app: command-service
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: command-service
+  template:
+    metadata:
+      labels:
+        app: command-service
+    spec: 
+      containers:
+      - name: command-service
+        image: quangduoong/command-service:latest
+      imagePullSecrets:
+      - name: regsecret
+--- 
+apiVersion: v1
+kind: Service 
+metadata:
+  name: command-clusterip-srv 
+spec: 
+  type: ClusterIP 
+  selector:
+    app: command-service 
+  ports: 
+    - name: command-service 
+      protocol: TCP 
+      port: 80 
+      targetPort: 80
