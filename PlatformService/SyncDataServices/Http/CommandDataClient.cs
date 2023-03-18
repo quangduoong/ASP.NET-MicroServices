@@ -18,8 +18,10 @@ public class CommandDataClient : ICommandDataClient
 
     public async Task SendPlatformToCommand(PlatformReadDto plat)
     {
-        var httpContent = new StringContent(JsonSerializer.Serialize(plat),
-        Encoding.UTF8, "application/json"
+        var httpContent = new StringContent(
+            JsonSerializer.Serialize(plat),
+            Encoding.UTF8,
+            "application/json"
         );
 
         var response = await _httpClient.PostAsync($"{_configuration["CommandService"]}/c/Platform/", httpContent);
